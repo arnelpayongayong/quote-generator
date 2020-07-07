@@ -8,7 +8,7 @@
     </div>
     <QuoteGenerator v-if="isGenerated"/>
 
-    <footer v-if="isGenerated" style="text-align:center;margin-top:40px">
+    <footer>
       Arnel Joshua O. Payongayong @ DevChallenges.io
     </footer>
   </div>
@@ -64,13 +64,27 @@ html,body{
   margin-right: 20px;
   margin-top: 20px;
   right: 5px;
+  top: 1%;
 }
 #random-button {
   border: none;
-  background: #ffffff;
+  background-color: transparent;
+  color: black;
   font-family: 'Raleway';
 }
+
 .material-icons {
   font-size: 20px;
+  color: black;
+  background: transparent;
+}
+footer{
+  position: fixed;
+  bottom: 5px;
+  text-align:center;
+  width: 100%;
+  color: white;
+  background-color: #2c3e50;
+  padding: 25px;
 }
 </style>
