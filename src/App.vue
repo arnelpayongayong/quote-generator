@@ -8,7 +8,6 @@
     </div>
     <QuoteGenerator v-if="isGenerated"/>
 
-
     <footer v-if="isGenerated" style="text-align:center;margin-top:40px">
       Arnel Joshua O. Payongayong @ DevChallenges.io
     </footer>
