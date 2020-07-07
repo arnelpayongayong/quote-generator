@@ -6,9 +6,10 @@
       autorenew
       </span>
     </div>
-    <QuoteGenerator/>
+    <QuoteGenerator v-if="isGenerated"/>
 
-    <footer style="text-align:center;">
+
+    <footer v-if="isGenerated" style="text-align:center;margin-top:40px">
       Arnel Joshua O. Payongayong @ DevChallenges.io
     </footer>
   </div>
@@ -23,6 +24,11 @@ const axios = require('axios').default;
 
 export default {
   name: 'App',
+  data(){
+    return{
+      isGenerated : false
+    }
+  },
   components: {
     QuoteGenerator
   },
@@ -31,6 +37,7 @@ export default {
       axios.get('https://quote-garden.herokuapp.com/api/v2/quotes/random').then(response => {
           bus.$emit('sample',response.data)
       })
+      this.isGenerated = true;
     }
   },
 }
@@ -51,11 +58,13 @@ html,body{
   height:100%;
 }
 .navbar {
+  position: fixed;
   display: flex;
   align-content: flex-end;
   justify-content: flex-end;
   margin-right: 20px;
   margin-top: 20px;
+  right: 5px;
 }
 #random-button {
   border: none;

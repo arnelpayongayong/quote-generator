@@ -1,31 +1,63 @@
 <template>
     <div class="main">
-        <div class="item">
-            <p>
-                "{{quote.quoteText}}"
-            </p>
-        </div>
-
-        <div class="item" id="author-section">
-            <div  id="author">
-                <label>{{quote.quoteAuthor}}</label>
+        <template v-if="!isClicked">
+            <div class="item">
+                <p>
+                    "{{quote.quoteText}}"
+                </p>
             </div>
-        </div>
+
+            <div class="item" id="author-section">
+                <div  id="author">
+                    <label>{{quote.quoteAuthor}}</label>
+                </div>
+
+                <div id="author" class="right-icon">
+                    <span class="material-icons" @click="authorQuotes">
+                    trending_flat
+                    </span>
+                </div>
+            </div>
+        </template>
+
+        <template v-else>
+            <div class="item" v-for="quote in quote.quotes" :key=" quote.quotes">
+                <p>
+                    "{{quote.quoteText}}"
+                </p>
+            </div>
+
+            <div class="item" id="author-section">
+                <div  id="author">
+                    <label>{{quote.quotes[0].quoteAuthor}}</label>
+                </div>
+            </div>
+        </template>
     </div>
 </template>
 <script>
 import {bus} from '../main';
+const axios = require('axios').default;
 
 export default {
     data(){
         return{
-            quote : {}
+            quote : {},
+            isClicked : false,
+        }
+    },
+    methods : {
+        authorQuotes() {
+            axios.get(`https://quote-garden.herokuapp.com/api/v2/authors/${this.quote.quoteAuthor}`).then((response) => {
+                this.quote = response.data;
+                this.isClicked = true;
+            })
         }
     },
     mounted(){
         bus.$on('sample',(data)=> {
             this.quote= data.quote;
-            console.log(this.quote);
+            this.isClicked = false;
         })
     }
 }
@@ -33,7 +65,7 @@ export default {
 <style>
 .main {
     display: flex;
-    height: 90vh;
+    height: auto;
     width: 50%;
     margin-left: 25%;
     flex-direction: column;
@@ -61,6 +93,15 @@ div > p {
     display: flex;
     align-content: flex-start;
     align-items: center;
+    width: 100%;
 
+}
+.right-icon {
+    justify-content: flex-end;
+    margin-right: 10px;
+}
+
+.material-icons:hover{
+    font-size: 200%;
 }
 </style>
